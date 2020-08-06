@@ -1,0 +1,25 @@
+{
+  "short_name": "kasirqu",
+  "name": "aplikasi kasir sederhana",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "IMG/logo.png",
+      "type": "image/png",
+      "sizes": "169x300"
+    },
+    {
+      "src": "IMG/logo.png",
+      "type": "image/png",
+      "sizes": "169x300"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
