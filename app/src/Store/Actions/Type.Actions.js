@@ -1,0 +1,17 @@
+////// BLOG
+export const BLOG_LOADING = 'BLOG_LOADING'
+export const BLOG_LOADED = 'BLOG_LOADED'
+export const GET_NEWEST_BLOG_LIST = 'GET_NEWEST_BLOG_LIST'
+export const Go_To_Blog_Preview = 'Go_To_Blog_Preview'
+export const GET_BLOG_LIST = 'GET_BLOG_LIST'
+export const GET_FILTERED_BLOG_LIST = 'GET_FILTERED_BLOG_LIST'
+////// ABOUT
+export const ABOUT_LOADING = 'ABOUT_LOADING'
+export const ABOUT_LOADED = 'ABOUT_LOADED'
+export const GET_ABOUT_LIFEPATH_LIST = 'GET_ABOUT_LIFEPATH_LIST'
+export const GET_ABOUT_SKILL_LIST = 'GET_ABOUT_SKILL_LIST'
+////// DISPLAY
+export const DARK_MODE = 'DARK_MODE'
+export const HIDE_NAVBAR = 'HIDE_NAVBAR'
+export const CHANGE_THEME = 'CHANGE_THEME'
+export const DEFAULT_THEME = 'DEFAULT_THEME'
