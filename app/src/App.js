@@ -1,18 +1,49 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import { BrowserRouter as Router } from 'react-router-dom'
 
+import Store from './Store/Store'
 import { connect } from 'react-redux'
+import { Hide_Nabar } from './Store/Actions/Display.Action'
+import { Load_User } from './Components/Cluster/KasirQu/src/Store/Actions/Auth.Actions'
 
-import { ThemeProvider, createMuiTheme, Paper } from '@material-ui/core'
+import { ThemeProvider, createMuiTheme, CssBaseline, useMediaQuery, Container } from '@material-ui/core'
+import { MUI_theme_auth_dark, MUI_theme_auth_light, MUI_theme_unauth_dark, MUI_theme_unauth_light, MUI_st__Container_SideNav, MUI_st__Container_FlatNav } from './Components/Cluster/KasirQu/src/MUI_theme'
+import { MUI_Initial_State } from './MUI_Theme_Style'
 
 import Navbar from './Components/Layouts/Navbar'
+import KasirQuNavbar from './Components/Cluster/KasirQu/src/Components/Containers/Navbar'
+import KasirQuMessages from './Components/Cluster/KasirQu/src/Components/Containers/Messages'
 import BaseRouter from './Router'
 
 const App = (props) => {
+  const [LocationURL, ChangeLocationURL] = React.useState(null)
+  const KasirQuValue = 'KasirQu'
+  useEffect(() => {
+    try {
+      const URLLocation = window.location.href
+      const KasirQuURLLocation = '/blog/preview/kasirqu'
+      if (URLLocation.includes(KasirQuURLLocation)) {
+        ChangeLocationURL(KasirQuValue)
+        Store.dispatch(Hide_Nabar())
+        const auth = props.auth
+        
+        if (auth.token || auth.isAuth) {
+          Store.dispatch(Load_User())
+        }
+        
+      } else {
+        // console.log('Non Preview URL')
+      }
+    } catch (err) {
+      console.log('Log: App -> err', err)
+    }
+    
+    // eslint-disable-next-line
+  }, [])
+  
   const Defatult_BackgroundDefault_Lg = '#eeeeee'
   const Defatult_BackgroundDefault_Dr = '#313131'
-  // const Defatult_BackgroundDefault_Dr = '#2d2d2d'
 
   const LightTheme = createMuiTheme({
     palette: {
@@ -72,49 +103,87 @@ const App = (props) => {
       navbar: props.NavbarTheme ? props.NavbarTheme : '#000000',
     },
   })
+
   const isDarkMode = props.isDarkMode ? props.isDarkMode : false
+  const KasirQuisDarkMode = props.auth.isDarkMode === true || props.auth.isDarkMode === "true" ? true : false
   const isNavbarHide = props.isNavbarHide ? true : false
-  const PaperAsDefault = props.DefaultTheme ? props.DefaultTheme : isDarkMode ? Defatult_BackgroundDefault_Dr : Defatult_BackgroundDefault_Lg
+  // const PaperAsDefault = props.DefaultTheme ? props.DefaultTheme : isDarkMode ? Defatult_BackgroundDefault_Dr : Defatult_BackgroundDefault_Lg
+  // const PaperAsDefault = null
+  const minScreenWidth = MUI_Initial_State.units.minWidth_first
+  const isFullNavbar = useMediaQuery(`(min-width:${minScreenWidth}px)`)
 
 
   return (
     <Fragment>
+
       <ThemeProvider
         theme={
-          isDarkMode ?
-            DarkTheme
-            : LightTheme
+          LocationURL === KasirQuValue ? (
+            (props.auth.token && props.auth.isAuth) ?
+              (KasirQuisDarkMode ? { ...DarkTheme, ...MUI_theme_auth_dark } : { ...LightTheme, ...MUI_theme_auth_light })
+              : (KasirQuisDarkMode ? { ...DarkTheme, ...MUI_theme_unauth_dark } : { ...LightTheme, ...MUI_theme_unauth_light })
+          ) : (
+              isDarkMode ? { ...DarkTheme } : { ...LightTheme }
+            )
         }
       >
-
-        <Paper
-          variant="outlined"
-          style={{ margin: 0, padding: 0, backgroundColor: PaperAsDefault, border: 'none' }}
-        >
-          <Router>
-            {!isNavbarHide ?
-              <Navbar />
-              : null
-            }
-            <BaseRouter />
-          </Router>
-        </Paper>
+        <CssBaseline />
+        <Router>
+          {/* <Paper
+            variant="outlined"
+            style={{ margin: 0, padding: 0, backgroundColor: PaperAsDefault, border: 'none' }}
+          > */}
+          {!isNavbarHide ?
+            <Navbar />
+            : null
+          }
+          {
+            LocationURL === KasirQuValue ? (
+              <Fragment>
+                {(props.auth.token && props.auth.isAuth) ?
+                  <KasirQuNavbar
+                    isDarkMode={KasirQuisDarkMode}
+                  />
+                  : null}
+                <KasirQuMessages />
+              </Fragment>
+            ) : null
+          }
+          {
+            LocationURL === KasirQuValue ? (
+              <Container
+                style={(props.auth.token && props.auth.isAuth) ? (
+                  (isFullNavbar) ?
+                    MUI_st__Container_SideNav
+                    : MUI_st__Container_FlatNav
+                ) : null}
+              >
+                <BaseRouter />
+              </Container>
+            ) : <BaseRouter />
+          }
+          {/* </Paper> */}
+        </Router>
       </ThemeProvider>
     </Fragment >
   )
 }
 
 const mapStateToProps = state => ({
-  isDarkMode: state.Display.isDarkMode,
-  isNavbarHide: state.Display.isNavbarHide,
-  NavbarTheme: state.Display.NavbarTheme,
-  PaperTheme: state.Display.PaperTheme,
-  DefaultTheme: state.Display.DefaultTheme,
-  PrimaryMainTheme: state.Display.PrimaryMainTheme,
-  SecondaryMainTheme: state.Display.SecondaryMainTheme,
-  ContrastTextTheme: state.Display.ContrastTextTheme,
-  TextPrimaryTheme: state.Display.TextPrimaryTheme,
-  TextSecondaryTheme: state.Display.TextSecondaryTheme,
+  ////// Generic
+  isDarkMode: state.Generic_Display.isDarkMode,
+  isNavbarHide: state.Generic_Display.isNavbarHide,
+  NavbarTheme: state.Generic_Display.NavbarTheme,
+  PaperTheme: state.Generic_Display.PaperTheme,
+  DefaultTheme: state.Generic_Display.DefaultTheme,
+  PrimaryMainTheme: state.Generic_Display.PrimaryMainTheme,
+  SecondaryMainTheme: state.Generic_Display.SecondaryMainTheme,
+  ContrastTextTheme: state.Generic_Display.ContrastTextTheme,
+  TextPrimaryTheme: state.Generic_Display.TextPrimaryTheme,
+  TextSecondaryTheme: state.Generic_Display.TextSecondaryTheme,
+  ////// Generic
+  auth: state.KasirQu_Auth,
+
 })
 
 export default connect(mapStateToProps)(App)

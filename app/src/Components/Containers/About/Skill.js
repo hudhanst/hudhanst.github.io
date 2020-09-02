@@ -179,7 +179,7 @@ const Skill = (props) => {
 }
 
 const mapStateToProps = state => ({
-    Skill_List: state.About.Skill_List
+    Skill_List: state.Generic_About.Skill_List
 })
 
 export default connect(mapStateToProps)(Skill)

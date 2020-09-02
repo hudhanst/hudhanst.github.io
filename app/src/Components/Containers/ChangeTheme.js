@@ -176,7 +176,7 @@ const ChangeTheme = (props) => {
 }
 
 const mapStateToProps = state => ({
-    isDarkMode: state.Display.isDarkMode
+    isDarkMode: state.Generic_Display.isDarkMode
 })
 
 export default connect(mapStateToProps)(ChangeTheme)

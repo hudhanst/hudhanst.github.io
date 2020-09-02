@@ -429,7 +429,7 @@ const LifePath = (props) => {
 }
 
 const mapStateToProps = state => ({
-    LifePath_List: state.About.LifePath_List
+    LifePath_List: state.Generic_About.LifePath_List
 })
 
 export default connect(mapStateToProps)(LifePath)

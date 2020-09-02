@@ -142,7 +142,7 @@ const Preview = (props) => {
 }
 
 const mapStateToProps = state => ({
-    BlogPreviewURL: state.Blog.BlogPreviewURL
+    BlogPreviewURL: state.Generic_Blog.BlogPreviewURL
 })
 
 export default connect(mapStateToProps)(Preview)

@@ -5,6 +5,6 @@ https://www.youtube.com/watch?v=X7IBa7vZjmo
 
 delete if not use
 
-html-loader
-jsdom
-dompurify
+chart.js
+material-ui-dropzone
+xlsx

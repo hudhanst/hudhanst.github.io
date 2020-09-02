@@ -291,7 +291,7 @@ const Blog = (props) => {
 }
 
 const mapStateToProps = state => ({
-    Blog_List: state.Blog.Blog_List
+    Blog_List: state.Generic_Blog.Blog_List
 })
 
 export default connect(mapStateToProps)(Blog)

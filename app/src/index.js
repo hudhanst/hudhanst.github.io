@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker'
 
 import './index.css'
+import './Components/Cluster/KasirQu/src/index.css'
 
 import App from './App'
 import Store from './Store/Store'
