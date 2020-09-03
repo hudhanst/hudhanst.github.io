@@ -20,13 +20,13 @@ const GithubRepoList = [
     },
     {
         Title: 'PrestasiQu',
-        BlogLink: '',
+        BlogLink: '/blog/blog/prestasiqu',
         Description: (
             'an university project, a main task is to store an achivment or punishment of student so a school orginize when needed.\n the main goal is to recreate an exist project using more moderent fermwork/ technology, the main project done with native php, js, html and css(bootrap) and run in XAMPP.The original file also included here.'
         ),
         Tags: ['python', 'javascript', 'django', 'django-rest-framework', 'sql', 'react', 'bootstrap'],
         GithubLink: 'https://github.com/hudhanst/PrestasiQu',
-        PrototypeLink: '',
+        PrototypeLink: '/blog/preview/prestasiqu',
     },
     {
         Title: 'KasirQu',

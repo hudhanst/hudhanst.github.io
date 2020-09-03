@@ -4,7 +4,3 @@ https://2050.earth/artworks
 https://www.youtube.com/watch?v=X7IBa7vZjmo
 
 delete if not use
-
-chart.js
-material-ui-dropzone
-xlsx

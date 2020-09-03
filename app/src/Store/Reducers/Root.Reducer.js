@@ -12,6 +12,13 @@ import KasirQu_Barang from '../../Components/Cluster/KasirQu/src/Store/Reducers/
 import KasirQu_Help from '../../Components/Cluster/KasirQu/src/Store/Reducers/Help.Reducer'
 import KasirQu_Messages from '../../Components/Cluster/KasirQu/src/Store/Reducers/Messages.Reducer'
 
+// import Auth from './Auth.Reducer'
+import PrestasiQu_Auth from '../../Components/Cluster/PrestasiQu/src/Store/Reducers/Auth.Reducer'
+import PrestasiQu_Messages from '../../Components/Cluster/PrestasiQu/src/Store/Reducers/Messages.Reducer'
+import PrestasiQu_Biodata from '../../Components/Cluster/PrestasiQu/src/Store/Reducers/Biodata.Reducer'
+import PrestasiQu_Point from '../../Components/Cluster/PrestasiQu/src/Store/Reducers/Point.Reducer'
+import PrestasiQu_Prestasi from '../../Components/Cluster/PrestasiQu/src/Store/Reducers/Prestasi.Reducer'
+
 const RootReducer = combineReducers({
     Generic_Blog,
     Generic_About,
@@ -24,6 +31,12 @@ const RootReducer = combineReducers({
     KasirQu_Barang,
     KasirQu_Help,
     KasirQu_Messages,
+
+    PrestasiQu_Auth,
+    PrestasiQu_Messages,
+    PrestasiQu_Biodata,
+    PrestasiQu_Point,
+    PrestasiQu_Prestasi,
 })
 
 export default RootReducer

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 import { Hide_Nabar } from '../../Store/Actions/Display.Action'
 
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 
 import { useTheme, Paper, Link, Typography, Box, LinearProgress } from '@material-ui/core'
 
@@ -56,7 +56,9 @@ const Preview = (props) => {
             variant='outlined'
             style={{ minWidth: '100vw', minHeight: '100vh', paddingBottom: '5vh', backgroundColor: DefaultTheme, border: 'none' }}
         >
-            {progress === WaitTime ? <Redirect to={Destination ? Destination : "/"} /> : null}
+            {/* {progress === WaitTime ? <Redirect to={Destination ? Destination : "/"} /> : null} */}
+            {progress === WaitTime ? window.location = Destination ? Destination : "/" : null}
+            {/* {progress === WaitTime ? window.open(Destination ? Destination : "/", '_blank') : null} */}
             <center>
                 <Link
                     href='/' underline='none'
@@ -65,7 +67,7 @@ const Preview = (props) => {
                         src={Logo}
                         alt='logo'
                         // 512 x 522
-                        style={{ width: '20vw', height: '28vh', paddingTop: '10vh' }}
+                        style={{ width: '19vw', height: '28vh', paddingTop: '10vh' }}
                     />
                 </Link>
                 <Typography

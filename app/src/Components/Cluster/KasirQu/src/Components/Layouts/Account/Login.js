@@ -80,7 +80,7 @@ class Login extends React.Component {
                             <Link href='/blog/preview/kasirqu/help/login' color="textPrimary"  >Bantuan Login?</Link>
                             <Link href='/blog/preview/kasirqu/help/first_time_use' color="textPrimary" style={{ padding: '10px' }} >Penggunaan Pertama?</Link>
                         </Typography>
-                        <TextField style={st_textfield} variant='outlined' type='text' onChange={this.onChange} label='User Name' name='username' value={username}  />
+                        <TextField style={st_textfield} variant='outlined' type='text' onChange={this.onChange} label='User Name' name='username' value={username} />
                         <FormControl variant="outlined" style={st_textfield} >
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
@@ -133,6 +133,9 @@ class Login extends React.Component {
 
                         <Button variant="outlined" style={st_button} color='primary' size="large" type='submit' >
                             Log In
+                        </Button>
+                        <Button variant="outlined" style={{ ...st_button, ...{ marginTop: '3vh' } }} color='secondary' size="large" onClick={() => window.location = "/"} >
+                            Back to Home
                         </Button>
                     </form>
                 </Container>

@@ -10,6 +10,13 @@ const BlogLearning = () => {
             <Introduce
                 Description='tes'
             />
+            <center>
+                <h1>BlogLearning</h1>
+                <h1>BlogLearning</h1>
+                <h1>BlogLearning</h1>
+                <h1>BlogLearning</h1>
+                <h1>BlogLearning</h1>
+            </center>
         </Fragment>
     )
 }

@@ -6,6 +6,7 @@ import Store from './Store/Store'
 import { connect } from 'react-redux'
 import { Hide_Nabar } from './Store/Actions/Display.Action'
 import { Load_User } from './Components/Cluster/KasirQu/src/Store/Actions/Auth.Actions'
+import { PrestasiQuLoadUser } from './Components/Cluster/PrestasiQu/src/Store/Actions/Auth.Actions'
 
 import { ThemeProvider, createMuiTheme, CssBaseline, useMediaQuery, Container } from '@material-ui/core'
 import { MUI_theme_auth_dark, MUI_theme_auth_light, MUI_theme_unauth_dark, MUI_theme_unauth_light, MUI_st__Container_SideNav, MUI_st__Container_FlatNav } from './Components/Cluster/KasirQu/src/MUI_theme'
@@ -13,35 +14,48 @@ import { MUI_Initial_State } from './MUI_Theme_Style'
 
 import Navbar from './Components/Layouts/Navbar'
 import KasirQuNavbar from './Components/Cluster/KasirQu/src/Components/Containers/Navbar'
+import PrestasiQuNavbar from './Components/Cluster/PrestasiQu/src/Components/Container/navbar'
 import KasirQuMessages from './Components/Cluster/KasirQu/src/Components/Containers/Messages'
+import PrestasiQuMassages from './Components/Cluster/PrestasiQu/src/Components/Container/Massages'
 import BaseRouter from './Router'
 
 const App = (props) => {
   const [LocationURL, ChangeLocationURL] = React.useState(null)
   const KasirQuValue = 'KasirQu'
+  const PrestasiQuValue = 'PrestasiQu'
   useEffect(() => {
     try {
       const URLLocation = window.location.href
       const KasirQuURLLocation = '/blog/preview/kasirqu'
+      const PrestasiQuURLLocation = '/blog/preview/prestasiqu'
       if (URLLocation.includes(KasirQuURLLocation)) {
         ChangeLocationURL(KasirQuValue)
         Store.dispatch(Hide_Nabar())
         const auth = props.auth
-        
+
         if (auth.token || auth.isAuth) {
           Store.dispatch(Load_User())
         }
-        
+
+      } else if (URLLocation.includes(PrestasiQuURLLocation)) {
+        require('bootstrap/dist/css/bootstrap.css')
+        require('bootstrap/dist/js/bootstrap')
+        require('./Components/Cluster/PrestasiQu/src/index.css')
+        ChangeLocationURL(PrestasiQuValue)
+        Store.dispatch(Hide_Nabar())
+
+        Store.dispatch(PrestasiQuLoadUser())
+
       } else {
         // console.log('Non Preview URL')
       }
     } catch (err) {
       console.log('Log: App -> err', err)
     }
-    
+
     // eslint-disable-next-line
   }, [])
-  
+
   const Defatult_BackgroundDefault_Lg = '#eeeeee'
   const Defatult_BackgroundDefault_Dr = '#313131'
 
@@ -147,8 +161,14 @@ const App = (props) => {
                   : null}
                 <KasirQuMessages />
               </Fragment>
+            ) : LocationURL === PrestasiQuValue ? (
+              <Fragment>
+                <PrestasiQuNavbar />
+                <PrestasiQuMassages />
+              </Fragment>
             ) : null
           }
+
           {
             LocationURL === KasirQuValue ? (
               <Container
@@ -160,6 +180,10 @@ const App = (props) => {
               >
                 <BaseRouter />
               </Container>
+            ) : LocationURL === PrestasiQuValue ? (
+              <div className="container custom-container-setting">
+                <BaseRouter />
+              </div>
             ) : <BaseRouter />
           }
           {/* </Paper> */}

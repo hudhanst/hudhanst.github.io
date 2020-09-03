@@ -6,7 +6,11 @@ import Home from './Components/Layouts/Home'
 import Blog from './Components/Layouts/Blog'
 import About from './Components/Layouts/About'
 import Preview from './Components/Containers/Preview'
-// import { PageNotFound } from './Components/Containers/404'
+import { PageNotFound } from './Components/Containers/404'
+
+
+
+import BlogLearning from './Components/Layouts/Blog/Blog.Learning'
 
 
 
@@ -14,7 +18,6 @@ import Preview from './Components/Containers/Preview'
 
 import BlogKasirQu from './Components/Layouts/Blog/Blog.KasirQu'
 
-// import KasirQuPrivateRoute from './Components/Cluster/KasirQu/src'
 import KasirQuPrivateRoute from './Components/Cluster/KasirQu/src/Security/PrivateRoute'
 
 import KasirQu_Login from './Components/Cluster/KasirQu/src/Components/Layouts/Account/Login'
@@ -82,8 +85,29 @@ import KasirQu_History from './Components/Cluster/KasirQu/src/Components/Layouts
 
 
 
-// import BlogLearning from './Components/Layouts/Blog/Blog.Learning'
-// import BlogPrestasiQu from './Components/Layouts/Blog/Blog.PrestasiQu'
+import BlogPrestasiQu from './Components/Layouts/Blog/Blog.PrestasiQu'
+
+import PrestasiQuPrivateRoute from './Components/Cluster/PrestasiQu/src/Security/PrivateRoute'
+
+import PrestasiQuLogin from './Components/Cluster/PrestasiQu/src/Components/Layout/Account/login'
+import PrestasiQuLogout from './Components/Cluster/PrestasiQu/src/Components/Layout/Account/logout'
+
+import PrestasiQuHome from './Components/Cluster/PrestasiQu/src/Components/Layout/Home'
+
+import PrestasiQuBiodata from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata'
+import PrestasiQuDataAdmin from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata.data_admin'
+import PrestasiQuDataGuru from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata.data_guru'
+import PrestasiQuDataInstansi from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata.data_instansi'
+import PrestasiQuDataPelanggaran from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata.data_pelanggaran'
+import PrestasiQuDataSiswa from './Components/Cluster/PrestasiQu/src/Components/Layout/Biodata/Biodata.data_siswa'
+
+import PrestasiQuPoint from './Components/Cluster/PrestasiQu/src/Components/Layout/Point/Point'
+import PrestasiQuPointPenerimaan from './Components/Cluster/PrestasiQu/src/Components/Layout/Point/Point.penerimaan_pengajuan_point'
+import PrestasiQuPointPengajuan from './Components/Cluster/PrestasiQu/src/Components/Layout/Point/Point.pengajuan_point'
+
+import PrestasiQuPrestasi from './Components/Cluster/PrestasiQu/src/Components/Layout/Prestasi/Prestasi'
+import PrestasiQuPrestasiPenerimaan from './Components/Cluster/PrestasiQu/src/Components/Layout/Prestasi/Prestasi.penerimaan_pengajuan_prestasi'
+import PrestasiQuPrestasiPengajuan from './Components/Cluster/PrestasiQu/src/Components/Layout/Prestasi/Prestasi.pengajuan_prestasi'
 
 const BaseRouter = () => {
     return (
@@ -93,7 +117,9 @@ const BaseRouter = () => {
             <Route exact path="/blog" component={Blog} />
             <Route exact path="/about" component={About} />
             <Route exact path="/blog/preview" component={Preview} />
-            {/* <Route path="*" component={PageNotFound} /> */}
+
+
+            <Route exact path="/blog/blog/learning" component={BlogLearning} />
 
 
 
@@ -164,9 +190,29 @@ const BaseRouter = () => {
 
 
 
-            {/* <Route exact path="/blog/blog/learning" component={BlogLearning} /> */}
-            {/* <Route exact path="/blog/blog/prestasiqu" component={BlogPrestasiQu} /> */}
+            <Route exact path="/blog/blog/prestasiqu" component={BlogPrestasiQu} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu" component={PrestasiQuHome} />
 
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata" component={PrestasiQuBiodata} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata/data-siswa" component={PrestasiQuDataSiswa} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata/data-guru" component={PrestasiQuDataGuru} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata/data-admin" component={PrestasiQuDataAdmin} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata/data-instansi" component={PrestasiQuDataInstansi} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/biodata/data-pelanggaran" component={PrestasiQuDataPelanggaran} />
+
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/prestasi" component={PrestasiQuPrestasi} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/prestasi/pengajuan-prestasi" component={PrestasiQuPrestasiPengajuan} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/prestasi/penerimaan-pengajuan-prestasi" component={PrestasiQuPrestasiPenerimaan} />
+
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/point" component={PrestasiQuPoint} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/point/pengajuan-point" component={PrestasiQuPointPengajuan} />
+            <PrestasiQuPrivateRoute exact path="/blog/preview/prestasiqu/point/penerimaan-pengajuan-point" component={PrestasiQuPointPenerimaan} />
+            <Route exact path="/blog/preview/prestasiqu/login" component={PrestasiQuLogin} />
+            <Route exact path="/blog/preview/prestasiqu/logout" component={PrestasiQuLogout} />
+
+
+
+            <Route path="*" component={PageNotFound} />
         </Switch>
     )
 }
