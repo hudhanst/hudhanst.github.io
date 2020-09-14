@@ -18,6 +18,7 @@ import PrestasiQuNavbar from './Components/Cluster/PrestasiQu/src/Components/Con
 import KasirQuMessages from './Components/Cluster/KasirQu/src/Components/Containers/Messages'
 import PrestasiQuMassages from './Components/Cluster/PrestasiQu/src/Components/Container/Massages'
 import BaseRouter from './Router'
+import PrestasiQuTheme from './Components/Cluster/PrestasiQuTheme'
 
 const App = (props) => {
   const [LocationURL, ChangeLocationURL] = React.useState(null)
@@ -40,9 +41,9 @@ const App = (props) => {
 
       } else if (URLLocation.includes(PrestasiQuURLLocation)) {
         console.log('Log: App -> PrestasiQuValue', PrestasiQuValue)
-        require('bootstrap/dist/css/bootstrap.css')
-        require('bootstrap/dist/js/bootstrap')
-        require('./Components/Cluster/PrestasiQu/src/index.css')
+        // require('bootstrap/dist/css/bootstrap.css')
+        // require('bootstrap/dist/js/bootstrap')
+        // require('./Components/Cluster/PrestasiQu/src/index.css')
         ChangeLocationURL(PrestasiQuValue)
         Store.dispatch(Hide_Nabar())
 
@@ -195,9 +196,13 @@ const App = (props) => {
                 <BaseRouter />
               </Container>
             ) : LocationURL === PrestasiQuValue ? (
-              <div className="container custom-container-setting">
-                <BaseRouter />
-              </div>
+              <PrestasiQuTheme>
+                <div className="container custom-container-setting">
+                  <BaseRouter />
+                </div>
+              </PrestasiQuTheme>
+
+              // <BaseRouter />
             ) : <BaseRouter />
           }
           {/* </Paper> */}

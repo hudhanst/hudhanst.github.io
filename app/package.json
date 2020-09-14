@@ -24,7 +24,7 @@
     "redux-thunk": "^2.3.0",
     "xlsx": "^0.16.6"
   },
-  "homepage": "http://127.0.0.1:4000",
+  "homepage": "https://hudhanst.github.io",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
