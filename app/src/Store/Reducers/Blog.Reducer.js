@@ -5,10 +5,14 @@ import {
     Go_To_Blog_Preview,
     GET_BLOG_LIST,
     GET_FILTERED_BLOG_LIST,
+    GET_BLOG_DETAIL,
+    USEABLE_KASIRQU_USER_LIST,
+    USEABLE_PRESTASIQU_USER_LIST,
 } from '../Actions/Type.Actions'
 
 const GithubRepoList = [
     {
+        id: '1',
         Title: 'Learning',
         BlogLink: '/blog/blog/learning',
         Description: (
@@ -19,6 +23,7 @@ const GithubRepoList = [
         PrototypeLink: '',
     },
     {
+        id: '2',
         Title: 'PrestasiQu',
         BlogLink: '/blog/blog/prestasiqu',
         Description: (
@@ -29,6 +34,7 @@ const GithubRepoList = [
         PrototypeLink: '/blog/preview/prestasiqu',
     },
     {
+        id: '3',
         Title: 'KasirQu',
         BlogLink: '/blog/blog/kasirqu',
         Description: (
@@ -44,55 +50,78 @@ const initialState = {
     isBlogLoading: false,
     BlogPreviewURL: null,
     Blog_List: [],
+    Blog_Detail: null,
+    KasirQu_Useable_User_List: [],
+    PrestasiQu_Useable_User_List: [],
 }
 
 export default function (state = initialState, action) {
-    switch (action.type) {
-        case BLOG_LOADING:
-            return {
-                ...state,
-                isBlogLoading: true,
-            }
-        case BLOG_LOADED:
-            return {
-                ...state,
-                isBlogLoading: false,
-            }
-        case GET_NEWEST_BLOG_LIST:
-            return {
-                ...state,
-                Blog_List: GithubRepoList.slice(0, 3)
-            }
-        case Go_To_Blog_Preview:
-            return {
-                ...state,
-                BlogPreviewURL: action.payload
-            }
-        case GET_BLOG_LIST:
-            return {
-                ...state,
-                Blog_List: GithubRepoList
-            }
-        case GET_FILTERED_BLOG_LIST:
-            const ListOfTags = action.payload
-            const Blog_List = GithubRepoList
-            if (ListOfTags.length > 0) {
-                const newBlog_List = []
-                Blog_List.forEach(element => {
-                    const Blog_List_Tags = element.Tags
-                    const isTagCorrect = Blog_List_Tags.filter(item => ListOfTags.includes(item))
-                    if (isTagCorrect.length === ListOfTags.length) {
-                        newBlog_List.push(element)
-                    }
-                })
-                state.Blog_List = newBlog_List
-            } else {
-                state.Blog_List = Blog_List
-            }
-            return {
-                ...state,
-            }
-        default:
-            return state
+    try {
+        switch (action.type) {
+            case BLOG_LOADING:
+                return {
+                    ...state,
+                    isBlogLoading: true,
+                }
+            case BLOG_LOADED:
+                return {
+                    ...state,
+                    isBlogLoading: false,
+                }
+            case GET_NEWEST_BLOG_LIST:
+                return {
+                    ...state,
+                    Blog_List: GithubRepoList.slice(0, 3)
+                }
+            case Go_To_Blog_Preview:
+                return {
+                    ...state,
+                    BlogPreviewURL: action.payload
+                }
+            case GET_BLOG_LIST:
+                return {
+                    ...state,
+                    Blog_List: GithubRepoList
+                }
+            case GET_FILTERED_BLOG_LIST:
+                const ListOfTags = action.payload
+                const Blog_List = GithubRepoList
+                if (ListOfTags.length > 0) {
+                    const newBlog_List = []
+                    Blog_List.forEach(element => {
+                        const Blog_List_Tags = element.Tags
+                        const isTagCorrect = Blog_List_Tags.filter(item => ListOfTags.includes(item))
+                        if (isTagCorrect.length === ListOfTags.length) {
+                            newBlog_List.push(element)
+                        }
+                    })
+                    state.Blog_List = newBlog_List
+                } else {
+                    state.Blog_List = Blog_List
+                }
+                return {
+                    ...state,
+                }
+            case GET_BLOG_DETAIL:
+                const Detail = GithubRepoList.find((item) => item.id === String(action.payload))
+                return {
+                    ...state,
+                    Blog_Detail: Detail
+                }
+            case USEABLE_KASIRQU_USER_LIST:
+                return {
+                    ...state,
+                    KasirQu_Useable_User_List: action.payload,
+                }
+            case USEABLE_PRESTASIQU_USER_LIST:
+                return {
+                    ...state,
+                    PrestasiQu_Useable_User_List: action.payload,
+                }
+            default:
+                return state
+        }
+    } catch (err) {
+        console.log('Log: err', err)
     }
 }

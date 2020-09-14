@@ -3,6 +3,7 @@ import {
     HIDE_NAVBAR,
     CHANGE_THEME,
     DEFAULT_THEME,
+    RELOAD_PAGE,
 } from '../Actions/Type.Actions'
 
 const initialState = {
@@ -75,6 +76,12 @@ export default function (state = initialState, action) {
                 TextPrimaryTheme: '',
                 TextSecondaryTheme: '',
             }
+        case RELOAD_PAGE: {
+            window.location.reload(true)
+            return {
+                ...state,
+            }
+        }
         default:
             return state
     }

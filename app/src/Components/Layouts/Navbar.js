@@ -2,7 +2,8 @@ import React, { Fragment, useState, useEffect } from 'react'
 
 import { Link as GoTo } from 'react-router-dom'
 
-import { useMediaQuery, useTheme, AppBar, Typography, Link, Toolbar, IconButton, Drawer, Modal, Paper } from '@material-ui/core'
+// import { useMediaQuery, useTheme, AppBar, Typography, Link, Toolbar, IconButton, Drawer, Modal, Paper } from '@material-ui/core'
+import { useMediaQuery, useTheme, AppBar, Typography, Toolbar, IconButton, Drawer, Modal, Paper } from '@material-ui/core'
 
 import { MUI_Initial_State } from '../../MUI_Theme_Style'
 
@@ -78,7 +79,7 @@ const Navbar = () => {
                 >
                     Blog
                 </GoTo>
-                {/* <GoTo
+                <GoTo
                     to='/about'
                     id='FullNavbar_About'
                     onMouseOver={(e) => MouseHover(e)}
@@ -86,8 +87,8 @@ const Navbar = () => {
                     style={{ ...Toolbar_Menu }}
                 >
                     About
-                </GoTo> */}
-                <Link
+                </GoTo>
+                {/* <Link
                     href='/about'
                     id='FullNavbar_About'
                     onMouseOver={(e) => MouseHover(e)}
@@ -95,7 +96,7 @@ const Navbar = () => {
                     style={{ ...Toolbar_Menu }}
                 >
                     About
-                </Link>
+                </Link> */}
                 <Typography
                     id='FullNavbar_ChangeTheme'
                     onMouseOver={(e) => MouseHover(e)}

@@ -32,6 +32,15 @@ html {
 .unshow {
   display: none;
 }
-.show{
+
+.show {
   display: block;
+}
+
+.unvisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
 }

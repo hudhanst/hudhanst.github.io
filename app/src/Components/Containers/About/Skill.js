@@ -25,6 +25,7 @@ const Skill = (props) => {
     })
 
     useEffect(() => {
+        // console.log('skill')
         ////// SKILLTYPOGRAPHY
         try {
             gsap.fromTo('.SkillTypography', {
@@ -33,14 +34,15 @@ const Skill = (props) => {
             }, {
                 scrollTrigger: {
                     trigger: '.SkillTypography',
-                    // toggleActions: 'restart none none none'
-                    toggleActions: 'restart pause resume pause',
+                    start: 'top 110%',
+                    toggleActions: 'restart none none none'
+                    // toggleActions: 'restart pause resume pause',
                     // markers: true,
                 },
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                // duration: 1
+                duration: 1,
             })
         } catch (err) {
             console.log('Log: Skill 1 -> err', err)
@@ -48,14 +50,20 @@ const Skill = (props) => {
         ////// MAJORSKILL
         try {
             gsap.utils.toArray(state.MajorSkill_GSAP.forEach((panel, index) => {
-                gsap.from(panel, {
-                    scrollTrigger: {
-                        trigger: panel,
-                        toggleActions: 'restart none none none'
-                    },
+                gsap.fromTo(panel, {
                     opacity: 0,
                     y: 50,
-                    duration: 1
+                }, {
+                    scrollTrigger: {
+                        trigger: panel,
+                        start: 'top 110%',
+                        toggleActions: 'restart none none none',
+                        // toggleActions: 'restart pause resume pause',
+                        // markers: true,
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 1,
                 })
             }))
         } catch (err) {
@@ -64,23 +72,28 @@ const Skill = (props) => {
         ////// MINORSKILL
         try {
             gsap.utils.toArray(state.MinorSkill_GSAP.forEach((panel, index) => {
-                gsap.from(panel, {
-                    scrollTrigger: {
-                        trigger: panel,
-                        start: 'top 110%',
-                        // toggleActions: 'restart none none none',
-                        toggleActions: 'restart pause resume pause',
-                        // markers: true,
-                    },
+                gsap.fromTo(panel, {
                     opacity: 0,
                     y: -50,
                     scale: 0,
-                    // duration: 1
+                }, {
+                    scrollTrigger: {
+                        trigger: panel,
+                        start: 'top 110%',
+                        toggleActions: 'restart none none none',
+                        // toggleActions: 'restart pause resume pause',
+                        // markers: true,
+                    },
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 1,
                 })
             }))
         } catch (err) {
             console.log('Log: Skill 3 -> err', err)
         }
+        ScrollTrigger.refresh()
     })
 
     const theme = useTheme()
@@ -95,7 +108,7 @@ const Skill = (props) => {
         <Paper
             id='Skill'
             variant='outlined'
-            style={{ border: 'none', margin: '1%', padding: '1%', width: '90%', backgroundColor: NavbarTheme }}
+            style={{ border: 'none', margin: '1%', padding: '1%', width: '90%', marginTop: '5vh', backgroundColor: NavbarTheme }}
         >
             <Typography
                 variant='h1'
@@ -104,6 +117,14 @@ const Skill = (props) => {
                 style={{ fontSize: '4vw', color: ContrastTextTheme }}
             >
                 Skill
+            </Typography>
+            <Typography
+                variant='subtitle1'
+                className='SkillTypography'
+                align='center'
+                style={{ fontSize: '1vw', color: ContrastTextTheme }}
+            >
+                *Keep in mind the score given below are uncertain. The score given based on my own opinion, to make it more clear i give a reason why score that height and that low
             </Typography>
             {SkillsData.map((item_skill, index_skill) => (
                 <Paper

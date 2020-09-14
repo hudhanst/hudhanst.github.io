@@ -29,6 +29,7 @@ const App = (props) => {
       const KasirQuURLLocation = '/blog/preview/kasirqu'
       const PrestasiQuURLLocation = '/blog/preview/prestasiqu'
       if (URLLocation.includes(KasirQuURLLocation)) {
+        console.log('Log: App -> KasirQuValue', KasirQuValue)
         ChangeLocationURL(KasirQuValue)
         Store.dispatch(Hide_Nabar())
         const auth = props.auth
@@ -38,6 +39,7 @@ const App = (props) => {
         }
 
       } else if (URLLocation.includes(PrestasiQuURLLocation)) {
+        console.log('Log: App -> PrestasiQuValue', PrestasiQuValue)
         require('bootstrap/dist/css/bootstrap.css')
         require('bootstrap/dist/js/bootstrap')
         require('./Components/Cluster/PrestasiQu/src/index.css')
@@ -47,7 +49,7 @@ const App = (props) => {
         Store.dispatch(PrestasiQuLoadUser())
 
       } else {
-        // console.log('Non Preview URL')
+        console.log('Non Preview URL')
       }
     } catch (err) {
       console.log('Log: App -> err', err)
@@ -69,7 +71,11 @@ const App = (props) => {
       },
 
       primary: {
-        main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#3b5249',
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#3f51b5',
+        main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#3b5249',//1
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#ADC7B5',//2
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#F9ECDF',//3 x
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#F5D040',//4 x
         contrastText: props.ContrastTextTheme ? props.ContrastTextTheme : '#ffffff',
       },
 
@@ -85,7 +91,10 @@ const App = (props) => {
     },
 
     custom: {
-      navbar: props.NavbarTheme ? props.NavbarTheme : '#382933',
+      navbar: props.NavbarTheme ? props.NavbarTheme : '#382933',//1
+      // navbar: props.NavbarTheme ? props.NavbarTheme : '#331B40',//2
+      // navbar: props.NavbarTheme ? props.NavbarTheme : '#825855',//3 x
+      // navbar: props.NavbarTheme ? props.NavbarTheme : '#0A164e',//4 x
     },
   })
 
@@ -99,7 +108,12 @@ const App = (props) => {
       },
 
       primary: {
-        main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#382933',
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#3f51b5',
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#382933',//1
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#1a1a2e',//1.2
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#1F2833',//1.5
+        // main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#252525',//v1
+        main: props.PrimaryMainTheme ? props.PrimaryMainTheme : '#222222',//v2
         contrastText: props.ContrastTextTheme ? props.ContrastTextTheme : '#ffffff',
       },
 
@@ -114,7 +128,7 @@ const App = (props) => {
       },
     },
     custom: {
-      navbar: props.NavbarTheme ? props.NavbarTheme : '#000000',
+      navbar: props.NavbarTheme ? props.NavbarTheme : '#000000',//1
     },
   })
 

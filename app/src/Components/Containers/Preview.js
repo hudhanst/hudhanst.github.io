@@ -1,41 +1,51 @@
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 
 import Store from '../../Store/Store'
 import { connect } from 'react-redux'
 
 import { Hide_Nabar } from '../../Store/Actions/Display.Action'
+import { Get_Useable_KasirQu_User_List, Get_Useable_PrestasiQu_User_List } from '../../Store/Actions/Blog.Actions'
 
 // import { Redirect } from 'react-router-dom'
 
-import { useTheme, Paper, Link, Typography, Box, LinearProgress } from '@material-ui/core'
+import { useTheme, Paper, Link, Typography, Box, LinearProgress, Table, TableHead, TableBody, TableRow, TableCell, Button } from '@material-ui/core'
 
 import Logo from '../../IMG/logo_1.png'
 
 import PauseCircleFilledRoundedIcon from '@material-ui/icons/PauseCircleFilledRounded'
 import PlayCircleFilledRoundedIcon from '@material-ui/icons/PlayCircleFilledRounded'
+import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
+import CancelRoundedIcon from '@material-ui/icons/CancelRounded'
 
 const Preview = (props) => {
     const [state, setState] = React.useState({
         isPause: false,
     })
     const WaitTime = 10
+
+    const Destination = props.BlogPreviewURL ? props.BlogPreviewURL : null
+    console.log('Log: Preview -> Destination', Destination)
+
+    const KasirQuDestination = '/blog/preview/kasirqu'
+    const PrestasiQuDestination = '/blog/preview/prestasiqu'
+
     const [progress, setProgress] = React.useState(0)
     console.log(`${progress}/${WaitTime}s`)
     // console.log('Log: Preview -> progress', state.isPause)
     useEffect(() => {
         Store.dispatch(Hide_Nabar())
+        if (Destination === KasirQuDestination) {
+            Store.dispatch(Get_Useable_KasirQu_User_List())
+        } else if (Destination === PrestasiQuDestination) {
+            Store.dispatch(Get_Useable_PrestasiQu_User_List())
+        }
         const timer = setInterval(() => {
             setProgress((prevProgress) => (state.isPause === false && prevProgress < WaitTime ? prevProgress + 1 : prevProgress + 0))
         }, 1000)
         return () => {
             clearInterval(timer)
         }
-    }, [state.isPause, WaitTime])
-
-
-
-    const Destination = props.BlogPreviewURL ? props.BlogPreviewURL : null
-    console.log('Log: Preview -> Destination', Destination)
+    }, [state.isPause, WaitTime, Destination])
 
     const theme = useTheme()
     const DefaultTheme = theme.palette.background.default
@@ -50,6 +60,182 @@ const Preview = (props) => {
         // console.log(state.isPause)
     }
 
+    const UseableUserList = Destination === KasirQuDestination ?
+        (props.KasirQu_Useable_User_List ?
+            props.KasirQu_Useable_User_List
+            : [])
+        : Destination === PrestasiQuDestination ?
+            (props.PrestasiQu_Useable_User_List ?
+                props.PrestasiQu_Useable_User_List
+                : [])
+            : []
+    // console.log('Log: Preview -> UseableUserList', UseableUserList)
+
+    const QuestionTypography = (props) => {
+        return <Typography
+            align='left'
+            variant='h3'
+            color='textPrimary'
+            style={{ fontSize: '1.8vw' }}
+            {...props}
+        />
+    }
+
+    const AnswerTypography = (props) => {
+        return <Typography
+            align='left'
+            variant='subtitle1'
+            color='textSecondary'
+            style={{ fontSize: '1.2vw', marginLeft: '1vw' }}
+            {...props}
+        />
+    }
+
+    const ReadMeKasirQu = () => {
+        return (
+            <Fragment>
+                <QuestionTypography>
+                    Is a preview 100% same as original?
+                                        </QuestionTypography>
+                <AnswerTypography>
+                    No, because there is no backend service avaliable some of them are not working, a preview only show frontend
+                                </AnswerTypography>
+
+                <QuestionTypography>
+                    What kind of function didnt work on preview?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    All function related with backend service (add, get, update, delete), in addition some of them changes to give better experience, some of them also change to give warning about related function didnt work
+                                </AnswerTypography>
+
+                <QuestionTypography>
+                    How can i use preview page?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    To use a preview page, first you need to have account and password (listed below), after login you can go to help page and read related topic
+                                </AnswerTypography>
+                <AnswerTypography>
+                    Account Detail:
+                                </AnswerTypography>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align='center' style={{ width: '5%' }} >No</TableCell>
+                            <TableCell align='center' style={{ width: '40%' }} >User Name</TableCell>
+                            <TableCell align='center' style={{ width: '15%' }} >Password</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Active</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Kasir</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Admin</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Super User</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {UseableUserList.map((item, index) => (
+                            <TableRow
+                                hover
+                                key={index}
+                            >
+                                <TableCell align='right' >{index + 1}</TableCell>
+                                <TableCell align='left' >{item.UserName}</TableCell>
+                                <TableCell align='left' >{item.Password}</TableCell>
+                                <TableCell align='center' >{item.isActive ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.isKasir ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.isAdmin ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.isSuperUser ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <QuestionTypography>
+                    How can i back to homepage?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    to back to homepage you can change url or logout, after logout you will redirected to login page, in there you can find button to back to homepage
+                                </AnswerTypography>
+                <QuestionTypography>
+                    Where can i find logout button?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    first you must go to account menu, you can find it on side menu or main menu. in account menu under profile you can find logout button
+                </AnswerTypography>
+            </Fragment>
+        )
+    }
+
+    const ReadMePrestasiQu = () => {
+        return (
+            <Fragment>
+                <QuestionTypography>
+                    Is a preview 100% same as original?
+                                        </QuestionTypography>
+                <AnswerTypography>
+                    No, because there is no backend service avaliable some of them are not working, a preview only show frontend
+                                </AnswerTypography>
+
+                <QuestionTypography>
+                    What kind of function didnt work on preview?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    All function related with backend service (add, get, update, delete), in addition some of them changes to give better experience, some of them also change to give warning about related function didnt work
+                                </AnswerTypography>
+
+                <QuestionTypography>
+                    How can i use preview page?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    To use a preview page, first you need to have account and password (listed below), after login you can go to help page and read related topic
+                                </AnswerTypography>
+                <AnswerTypography>
+                    Account Detail:
+                                </AnswerTypography>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell align='center' style={{ width: '5%' }} >No</TableCell>
+                            <TableCell align='center' style={{ width: '20%' }} >User Name</TableCell>
+                            <TableCell align='center' style={{ width: '15%' }} >Password</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Active</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Siswa</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Staff</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Admin</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Super Visor</TableCell>
+                            <TableCell align='center' style={{ width: '10%' }} >Super User</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {UseableUserList.map((item, index) => (
+                            <TableRow
+                                hover
+                                key={index}
+                            >
+                                <TableCell align='right' >{index + 1}</TableCell>
+                                <TableCell align='left' >{item.UserName}</TableCell>
+                                <TableCell align='left' >{item.Password}</TableCell>
+                                <TableCell align='center' >{item.active ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.siswa ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.staff ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.admin ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.supervisor ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                                <TableCell align='center' >{item.superuser ? <CheckCircleOutlineRoundedIcon color='primary' /> : <CancelRoundedIcon color='secondary' />}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <QuestionTypography>
+                    How can i back to homepage?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    to back to homepage you can change url or logout, after logout you will redirected to login page, in there you can find button to back to homepage
+                                </AnswerTypography>
+                <QuestionTypography>
+                    Where can i find logout button?
+                                </QuestionTypography>
+                <AnswerTypography>
+                    at the right side of navbar
+                </AnswerTypography>
+            </Fragment>
+        )
+    }
 
     return (
         <Paper
@@ -124,27 +310,74 @@ const Preview = (props) => {
                         </Typography>
                     </Box>
                 </Box>
-                {Destination ?
+                {Destination ? (
                     <Paper
                         variant='outlined'
-                        style={{ width: '80vw', minHeight: '40vh', boxShadow: '0 2px 4px -1px #010101', marginTop: '5vh', marginBottom: '5vh', borderRadius: '15px' }}
+                        style={{ width: '80vw', minHeight: '40vh', boxShadow: '0 2px 4px -1px #010101', marginTop: '5vh', marginBottom: '5vh', padding: '2vw', borderRadius: '15px' }}
                     >
-                    </Paper> :
-                    <Typography
+                        <Typography
+                            variant='h1'
+                            color='textPrimary'
+                            align='center'
+                            style={{ fontSize: '2vw' }}
+                        >
+                            {Destination === KasirQuDestination ?
+                                "KasirQu"
+                                : Destination === PrestasiQuDestination ?
+                                    "PrestasiQu"
+                                    : ''}
+                        </Typography>
+
+                        {Destination === KasirQuDestination ? <ReadMeKasirQu />
+                            : Destination === PrestasiQuDestination ? <ReadMePrestasiQu />
+                                : null}
+                        {/* <center> */}
+                        {state.isPause ?
+                            <Button
+                                color='primary'
+                                variant='contained'
+                                style={{ paddingTop: '1vh', paddingBottom: '1vh', margin: '1%', borderRadius: '5px', width: '90%' }}
+                                onClick={() => PauseLoading(false)}
+                            >
+                                Continue a Timer
+                                </Button>
+                            : <Button
+                                color='secondary'
+                                variant='contained'
+                                style={{ paddingTop: '1vh', paddingBottom: '1vh', margin: '1%', borderRadius: '5px', width: '90%' }}
+                                onClick={() => PauseLoading(true)}
+                            >
+                                Pause a Timer
+                                </Button>
+                        }
+                        <Button
+                            color='primary'
+                            variant='contained'
+                            style={{ paddingTop: '1vh', paddingBottom: '1vh', margin: '1%', borderRadius: '5px', width: '90%' }}
+                            onClick={() => setProgress(WaitTime)}
+                        >
+                            Go To Preview Page
+                            </Button>
+                        {/* </center> */}
+                    </Paper>)
+
+                    : (<Typography
                         variant='h1'
                         color='secondary'
                         align='center'
                         style={{ marginTop: '10vh', fontSize: '3vw' }}
                     >
                         Something Wrong Happen, Cant Redirect to Unknow Destination
-                    </Typography>}
+                    </Typography>)}
             </center>
         </Paper>
     )
 }
 
 const mapStateToProps = state => ({
-    BlogPreviewURL: state.Generic_Blog.BlogPreviewURL
+    BlogPreviewURL: state.Generic_Blog.BlogPreviewURL,
+    KasirQu_Useable_User_List: state.Generic_Blog.KasirQu_Useable_User_List,
+    PrestasiQu_Useable_User_List: state.Generic_Blog.PrestasiQu_Useable_User_List,
 })
 
 export default connect(mapStateToProps)(Preview)

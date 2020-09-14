@@ -18,7 +18,7 @@ import DateRangeIcon from '@material-ui/icons/DateRange'
 
 import NavigateNextRoundedIcon from '@material-ui/icons/NavigateNextRounded'
 import SkipNextRoundedIcon from '@material-ui/icons/SkipNextRounded'
-// import DoubleArrowRoundedIcon from '@material-ui/icons/DoubleArrowRounded'
+import DoubleArrowRoundedIcon from '@material-ui/icons/DoubleArrowRounded'
 import NavigateBeforeRoundedIcon from '@material-ui/icons/NavigateBeforeRounded'
 import SkipPreviousRoundedIcon from '@material-ui/icons/SkipPreviousRounded'
 
@@ -38,6 +38,32 @@ const LifePath = (props) => {
         ////// TIMELINE
         try {
             gsap.utils.toArray(state.LifePath_GSAP.forEach((panel, index) => {
+                // gsap.fromTo(panel, {
+
+                //     opacity: -0.1,
+                //     y: -50,
+                //     scale: 0,
+                //     // duration: 1
+                // }, {
+                //     scrollTrigger: {
+                //         trigger: panel,
+                //         // start: 'top 110%',
+                //         toggleActions: 'restart none none none',
+                //         // toggleActions: 'restart pause resume pause',
+                //         // scrub: 1,
+                //         // snap: index === 0 ? false : 1,
+                //         // markers: true,
+                //         onToggle: self => {
+                //             if (self.isActive === true) {
+                //                 state.Active_TimeLine.push(index)
+                //                 // console.log(state.Active_TimeLine)
+                //             }
+                //         },
+                //     },
+                //     opacity: 1.2,
+                //     y: 0,
+                //     scale: 1,
+                // })
                 gsap.fromTo(panel, {
                     opacity: -0.1,
                     scale: 0,
@@ -128,6 +154,7 @@ const LifePath = (props) => {
     const isFullNavbar = useMediaQuery(`(min-width:${minScreenWidth}px)`)
 
     const LifePathData = props.LifePath_List ? props.LifePath_List : []
+    // console.log('Log: LifePath -> LifePathData', LifePathData)
 
     const MonthPathData = [
         'January',
@@ -146,6 +173,7 @@ const LifePath = (props) => {
 
     const LifePathNav = () => {
         const Scroll_To_Component = (id, pxFromTop) => {
+            // console.log('Log: Scroll_To_Component -> id', id)
             try {
                 // const distanceScrolled = Reff ? document.body.scrollTop : 0
                 // const RefPosition = Reff ? document.getElementById(Reff).getBoundingClientRect().top : 0
@@ -169,15 +197,30 @@ const LifePath = (props) => {
                         behavior: 'smooth'
                     })
                 } else {
-                    document.getElementById(id).scrollIntoView({ behavior: "smooth" })
+                    // document.getElementById(id).scrollIntoView({ behavior: "smooth" })
+                    document.getElementById(!id && !pxFromTop ? 0 : id).scrollIntoView({ behavior: "smooth" })
                 }
             } catch (err) {
                 console.log('Log: Scroll_To_Component -> err', err)
             }
         }
+        const ActiveYears = LifePathData.filter((item) => item.Month)
+        // console.log('Log: LifePathNav -> ActiveYears', ActiveYears)
+        const Scroll_To_Active_Years = (id, inc) => {
+            try {
+                const TargetComp = ActiveYears.filter((item) => inc ? item.id > id : item.id < id)
+                const TargetList = TargetComp.map(item => item.id)
+                const NearestTarget = TargetList.length > 0 ? TargetList.reduce((prev, curr) => Math.abs(curr - id) < Math.abs(prev - id) ? curr : prev) : null
+                if (NearestTarget) {
+                    document.getElementById(NearestTarget).scrollIntoView({ behavior: "smooth" })
+                }
+            } catch (err) {
+                console.log('Log: Scroll_To_Active_Years -> err', err)
+            }
+        }
         return (
             <div
-                // className='unshow'
+                // className='unvisible'
                 id='LifePathNav'
                 style={{ position: 'fixed', zIndex: 100, left: 0, top: 0, padding: '1%', marginLeft: isFullNavbar ? '22vw' : '2%', marginTop: '15vh' }}
             >
@@ -223,7 +266,7 @@ const LifePath = (props) => {
                     </Tooltip>
                 </Typography>
 
-                {/* <Typography
+                <Typography
                     style={{ marginTop: '1.1vh', marginBottom: '1.1vh' }}
                 >
                     <Tooltip
@@ -234,6 +277,9 @@ const LifePath = (props) => {
                         <Button
                             variant='contained'
                             color='secondary'
+                            onClick={() => {
+                                Scroll_To_Active_Years(state.Active_TimeLine[state.Active_TimeLine.length - 1], false)
+                            }}
                             style={{ marginRight: '0.4vw' }}
                         >
                             <DoubleArrowRoundedIcon
@@ -250,12 +296,15 @@ const LifePath = (props) => {
                         <Button
                             variant='contained'
                             color='primary'
+                            onClick={() => {
+                                Scroll_To_Active_Years(state.Active_TimeLine[state.Active_TimeLine.length - 1], true)
+                            }}
                             style={{ marginLeft: '0.4vw' }}
                         >
                             <DoubleArrowRoundedIcon />
                         </Button>
                     </Tooltip>
-                </Typography> */}
+                </Typography>
 
                 <Typography
                     style={{ marginTop: '1.1vh', }}
@@ -297,6 +346,7 @@ const LifePath = (props) => {
 
     return (
         <Paper
+            id='LifePath'
             variant='outlined'
             style={{ border: 'none', margin: '0', padding: '1%', width: '90%', backgroundColor: NavbarTheme }}
         >

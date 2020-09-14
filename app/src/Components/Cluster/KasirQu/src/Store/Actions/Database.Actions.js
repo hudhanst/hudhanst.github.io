@@ -1186,3 +1186,14 @@ export const Database_Load_IntensitasBarangTransaksi_List = async (Token) => {
         throw ErrorResponse
     }
 }
+
+export const KasirQu_Database_Load_Useable_User_List = async () => {
+    try {
+        // const TokenDataBaseList = TokenDataBase
+        const UseableUserList = UsersDataBase.map((item) => ({ ...item, ...AccountDataBase.find((item_item) => item_item.UserName === item.UserName) }))
+        return UseableUserList
+    } catch (err) {
+        const ErrorResponse = err
+        throw ErrorResponse
+    }
+}

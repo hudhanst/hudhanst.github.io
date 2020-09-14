@@ -839,3 +839,14 @@ export const Database_Load_Prestasi_Submission_Detail = async (Token, PrestasiSu
         throw ErrorResponse
     }
 }
+
+export const PrestasiQu_Database_Load_Useable_User_List = async () => {
+    try {
+        // const TokenDataBaseList = TokenDataBase
+        const UseableUserList = UsersDataBase.map((item) => ({ ...item, ...AccountDataBase.find((item_item) => item_item.UserName === item.nomerinduk) }))
+        return UseableUserList
+    } catch (err) {
+        const ErrorResponse = err
+        throw ErrorResponse
+    }
+}

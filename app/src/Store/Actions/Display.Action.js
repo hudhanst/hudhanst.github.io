@@ -3,6 +3,7 @@ import {
     HIDE_NAVBAR,
     CHANGE_THEME,
     DEFAULT_THEME,
+    RELOAD_PAGE,
 } from './Type.Actions'
 
 export const Config_Dark_Mode = (isDarkMode) => (dispatch) => {
@@ -10,6 +11,7 @@ export const Config_Dark_Mode = (isDarkMode) => (dispatch) => {
         type: DARK_MODE,
         payload: isDarkMode
     })
+    dispatch({ type: RELOAD_PAGE })
 }
 
 export const Hide_Nabar = () => (dispatch) => {
@@ -30,10 +32,10 @@ export const Config_Theme = (ThemeColor) => (dispatch) => {
             TextSecondaryTheme: ThemeColor.TextSecondaryTheme ? ThemeColor.TextSecondaryTheme : '',
         }
     })
+    dispatch({ type: RELOAD_PAGE })
 }
 
 export const Config_Default_Theme = () => (dispatch) => {
-    dispatch({
-        type: DEFAULT_THEME,
-    })
+    dispatch({ type: DEFAULT_THEME, })
+    dispatch({ type: RELOAD_PAGE })
 }
