@@ -22,7 +22,7 @@
     "react-scripts": "^3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "xlsx": "^0.16.6"
+    "xlsx": "^0.17.0"
   },
   "homepage": "https://hudhanst.github.io",
   "scripts": {
